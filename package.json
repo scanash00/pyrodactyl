@@ -1,7 +1,7 @@
 {
     "name": "@pyrohost/pyrodactyl",
-    "version": "2.0.0-alpha",
-    "buildNumber": "200300",
+    "version": "2.0.1-alpha",
+    "buildNumber": "200301",
     "engines": {
         "node": ">=20.0"
     },
