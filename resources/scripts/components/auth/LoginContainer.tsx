@@ -28,12 +28,17 @@ function LoginContainer() {
 
     const navigate = useNavigate();
 
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+    const [formValues, setFormValues] = useState<Values | null>(null);
+
     useEffect(() => {
         clearFlashes();
     }, []);
 
     const onSubmit = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
         clearFlashes();
+
+        setFormValues(values);
 
         // If there is no token in the state yet, request the token and then abort this submit request
         // since it will be re-submitted when the recaptcha data is returned by the component.
@@ -45,35 +50,10 @@ function LoginContainer() {
                 clearAndAddHttpError({ error });
             });
 
+            setIsFormSubmitted(true);
+
             return;
         }
-
-        login({ ...values, recaptchaData: token })
-            .then((response) => {
-                if (response.complete) {
-                    // @ts-expect-error this is valid
-                    window.location = response.intended || '/';
-                    return;
-                }
-
-                navigate('/auth/login/checkpoint', { state: { token: response.confirmationToken } });
-            })
-            .catch((error) => {
-                console.error(error);
-
-                setToken('');
-                // https://github.com/jsardev/reaptcha/issues/218
-                if (ref.current) {
-                    setTimeout(() => {
-                        if (ref.current) {
-                            ref.current.reset();
-                        }
-                    }, 500);
-                }
-
-                setSubmitting(false);
-                clearAndAddHttpError({ error });
-            });
     };
 
     return (
@@ -154,6 +134,41 @@ function LoginContainer() {
                             onVerify={(response) => {
                                 setToken(response);
                                 submitForm();
+
+                                if (isFormSubmitted && formValues) {
+                                    login({
+                                        username: formValues.username,
+                                        password: formValues.password,
+                                        recaptchaData: response,
+                                    })
+                                        .then((response) => {
+                                            if (response.complete) {
+                                                // @ts-expect-error this is valid
+                                                window.location = response.intended || '/';
+                                                return;
+                                            }
+
+                                            navigate('/auth/login/checkpoint', {
+                                                state: { token: response.confirmationToken },
+                                            });
+                                        })
+                                        .catch((error) => {
+                                            console.error(error);
+
+                                            setToken('');
+                                            // https://github.com/jsardev/reaptcha/issues/218
+                                            if (ref.current) {
+                                                setTimeout(() => {
+                                                    if (ref.current) {
+                                                        ref.current.reset();
+                                                    }
+                                                }, 500);
+                                            }
+
+                                            setSubmitting(false);
+                                            clearAndAddHttpError({ error });
+                                        });
+                                }
                             }}
                             onExpire={() => {
                                 setSubmitting(false);
