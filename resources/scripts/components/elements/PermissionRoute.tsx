@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 
 import { ServerError } from '@/components/elements/ScreenBlock';
 
@@ -11,11 +11,11 @@ interface Props {
 }
 
 function PermissionRoute({ children, permission }: Props): JSX.Element {
+    const can = usePermissions(permission!);
+
     if (permission === undefined || permission === null) {
         return <>{children}</>;
     }
-
-    const can = usePermissions(permission);
 
     if (can.filter((p) => p).length > 0) {
         return <>{children}</>;

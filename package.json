@@ -1,5 +1,5 @@
 {
-    "name": "pyrodactyl",
+    "name": "@pyrohost/pyrodactyl",
     "version": "1.7.0",
     "buildNumber": "170000",
     "engines": {
@@ -39,6 +39,7 @@
         "debounce": "^2.0.0",
         "deepmerge-ts": "^5.1.0",
         "easy-peasy": "^6.0.4",
+        "eslint-plugin-react-compiler": "^0.0.0-experimental-c8b3f72-20240517",
         "events": "^3.3.0",
         "formik": "^2.4.5",
         "framer-motion": "^11.0.28",
@@ -46,9 +47,9 @@
         "million": "^3.0.6",
         "pathe": "^1.1.2",
         "qrcode.react": "^3.1.0",
-        "react": "^18.3.0",
+        "react": "^19.0.0-beta-26f2496093-20240514",
         "react-chartjs-2": "^5.2.0",
-        "react-dom": "^18.3.0",
+        "react-dom": "^19.0.0-beta-26f2496093-20240514",
         "react-fast-compare": "^3.2.2",
         "react-router-dom": "^6.22.3",
         "reaptcha": "^1.12.1",
@@ -71,9 +72,9 @@
         "@types/events": "^3.0.3",
         "@types/node": "^20.12.7",
         "@types/qrcode.react": "^1.0.5",
-        "@types/react": "^18.3.0",
         "@types/react-copy-to-clipboard": "^5.0.7",
-        "@types/react-dom": "^18.3.0",
+        "@types/react": "npm:types-react@beta",
+        "@types/react-dom": "npm:types-react-dom@beta",
         "@types/react-redux": "^7.1.33",
         "@types/uuid": "^9.0.8",
         "@typescript-eslint/eslint-plugin": "^7.5.0",
@@ -95,6 +96,10 @@
         "ts-essentials": "^9.4.2",
         "typescript": "^5.4.5",
         "vite-plugin-manifest-sri": "^0.2.0"
+    },
+    "overrides": {
+        "@types/react": "npm:types-react@beta",
+        "@types/react-dom": "npm:types-react-dom@beta"
     },
     "scripts": {
         "lint": "eslint ./resources/scripts/**/*.{ts,tsx} --ext .ts,.tsx --fix",
