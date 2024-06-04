@@ -1,6 +1,6 @@
 import { HugeIconProps } from './props';
 
-const HugeIconsArrowUp = (props: HugeIconProps) => {
+const HugeIconsChevronUp = (props: HugeIconProps) => {
     return (
         <svg
             className={'h-6 w-6' + (props.className ? ` ${props.className}` : '')}
@@ -18,4 +18,4 @@ const HugeIconsArrowUp = (props: HugeIconProps) => {
     );
 };
 
-export default HugeIconsArrowUp;
+export default HugeIconsChevronUp;

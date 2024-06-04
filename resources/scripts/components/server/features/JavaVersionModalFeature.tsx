@@ -11,8 +11,8 @@ import {
 } from '@/components/elements/DropdownMenu';
 import InputSpinner from '@/components/elements/InputSpinner';
 import Modal from '@/components/elements/Modal';
-import HugeIconsArrowDown from '@/components/elements/hugeicons/ArrowDown';
-import HugeIconsArrowUp from '@/components/elements/hugeicons/ArrowUp';
+import HugeIconsChevronDown from '@/components/elements/hugeicons/ChevronDown';
+import HugeIconsChevronUp from '@/components/elements/hugeicons/ChevronUp';
 import { SocketEvent, SocketRequest } from '@/components/server/events';
 
 import setSelectedDockerImage from '@/api/server/setSelectedDockerImage';
@@ -111,12 +111,12 @@ const JavaVersionModalFeature = () => {
                                             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                                             .join(' ') || 'Select a version'}
                                         {dropDownOpen ? (
-                                            <HugeIconsArrowUp
+                                            <HugeIconsChevronUp
                                                 fill={'currentColor'}
                                                 className={`ml-2 w-[16px] h-[16px]`}
                                             />
                                         ) : (
-                                            <HugeIconsArrowDown
+                                            <HugeIconsChevronDown
                                                 fill={'currentColor'}
                                                 className={`ml-2 w-[16px] h-[16px]`}
                                             />

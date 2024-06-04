@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/elements/button/index';
 // FIXME: add icons back
 import { Dialog } from '@/components/elements/dialog';
+import HugeIconsTask from '../hugeicons/Task';
 
 export default ({ meta }: { meta: Record<string, unknown> }) => {
     const [open, setOpen] = useState(false);
@@ -24,12 +25,11 @@ export default ({ meta }: { meta: Record<string, unknown> }) => {
             <button
                 aria-describedby={'View additional event metadata'}
                 className={
-                    'p-2 transition-colors duration-100 text-zinc-400 group-hover:text-zinc-300 group-hover:hover:text-zinc-50'
+                    'p-2 transition-colors duration-100 text-zinc-200 group-hover:text-zinc-300 group-hover:hover:text-zinc-50'
                 }
                 onClick={() => setOpen(true)}
             >
-                FIXME: Clipboard Icon
-                {/* <ClipboardListIcon className={'w-5 h-5'} /> */}
+                <HugeIconsTask fill={'currentColor'} />
             </button>
         </div>
     );

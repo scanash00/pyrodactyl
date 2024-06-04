@@ -360,6 +360,16 @@ export default () => {
                                             <p>Settings</p>
                                         </NavLink>
                                     </Can>
+                                    <Can action={'activity.*'} matchAny>
+                                        <NavLink
+                                            className='flex flex-row items-center'
+                                            to={`/server/${id}/activity`}
+                                            end
+                                        >
+                                            <HugeIconsController fill='currentColor' />
+                                            <p>Activity</p>
+                                        </NavLink>
+                                    </Can>
                                 </>
                             )}
                             <Can action={'startup.software'}>

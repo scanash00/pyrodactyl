@@ -13,8 +13,8 @@ import {
 import InputSpinner from '@/components/elements/InputSpinner';
 import { Switch } from '@/components/elements/SwitchV2';
 import { Input } from '@/components/elements/TextInput';
-import HugeIconsArrowDown from '@/components/elements/hugeicons/ArrowDown';
-import HugeIconsArrowUp from '@/components/elements/hugeicons/ArrowUp';
+import HugeIconsChevronDown from '@/components/elements/hugeicons/ChevronDown';
+import HugeIconsChevronUp from '@/components/elements/hugeicons/ChevronUp';
 import HugeIconsSquareLock from '@/components/elements/hugeicons/SquareLock';
 
 import { ServerEggVariable } from '@/api/server/types';
@@ -116,12 +116,12 @@ const VariableBox = ({ variable }: Props) => {
                                         >
                                             {variable.serverValue}
                                             {dropDownOpen ? (
-                                                <HugeIconsArrowUp
+                                                <HugeIconsChevronUp
                                                     fill={'currentColor'}
                                                     className={`ml-2 w-[16px] h-[16px]`}
                                                 />
                                             ) : (
-                                                <HugeIconsArrowDown
+                                                <HugeIconsChevronDown
                                                     fill={'currentColor'}
                                                     className={`ml-2 w-[16px] h-[16px]`}
                                                 />

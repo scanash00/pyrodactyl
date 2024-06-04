@@ -44,7 +44,7 @@ class ActivityLogController extends ClientApiController
                             ->orWhereIn('users.id', $subusers);
                     });
             })
-            ->paginate(min($request->query('per_page', 25), 100))
+            ->paginate(min($request->query('per_page', 10), 100))
             ->appends($request->query());
 
         return $this->fractal->collection($activity)
