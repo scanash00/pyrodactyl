@@ -116,6 +116,14 @@ class ActivityLog extends Model
     }
 
     /**
+     * Filter the activity logs by a specific date.
+     */
+    public function scopeForDate(Builder $builder, string $date): Builder
+    {
+        return $builder->whereDate('timestamp', $date);
+    }
+
+    /**
      * Returns models to be pruned.
      *
      * @see https://laravel.com/docs/9.x/eloquent#pruning-models

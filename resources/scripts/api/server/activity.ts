@@ -13,7 +13,7 @@ import { ServerContext } from '@/state/server';
 import useFilteredObject from '@/plugins/useFilteredObject';
 import { useServerSWRKey } from '@/plugins/useSWRKey';
 
-export type ActivityLogFilters = QueryBuilderParams<'ip' | 'event', 'timestamp'>;
+export type ActivityLogFilters = QueryBuilderParams<['ip', 'event', 'date'], 'timestamp'>;
 
 const useActivityLogs = (
     filters?: ActivityLogFilters,

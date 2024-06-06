@@ -5,8 +5,8 @@ import * as React from "react"
 import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
-import HugeIconsArrowLeft from "./hugeicons/ArrowLeft"
-import HugeIconsArrowRight from "./hugeicons/ArrowRight"
+import HugeIconsChevronLeft from "./hugeicons/ChevronLeft"
+import HugeIconsChevronRight from "./hugeicons/ChevronRight"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
@@ -19,14 +19,14 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+      className={cn("p-3 border-none", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
         nav: "space-x-1 flex items-center",
-        nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+        nav_button: "h-7 w-7 bg-transparent p-0 opacity-40 hover:opacity-100",
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse space-y-1",
@@ -40,23 +40,22 @@ function Calendar({
             ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
         ),
-        day: "h-8 w-8 p-0 font-normal aria-selected:opacity-100",
+        day: "h-8 w-8 p-0 font-normal aria-selected:opacity-100 rounded-md",
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
-        day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-        day_today: "bg-[#FFFFFF20] rounded-md text-accent-foreground",
+        day_selected: "bg-brand",
+        day_today: "bg-[#FFFFFF14]",
         day_outside:
           "day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
-        day_disabled: "text-muted-foreground opacity-50",
+        day_disabled: "opacity-50",
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <HugeIconsArrowLeft fill={'currentColor'} />,
-        IconRight: ({ ...props }) => <HugeIconsArrowRight fill={'currentColor'} />,
+        IconLeft: ({ ...props }) => <HugeIconsChevronLeft fill={'currentColor'} />,
+        IconRight: ({ ...props }) => <HugeIconsChevronRight fill={'currentColor'} />,
       }}
       {...props}
     />

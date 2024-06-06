@@ -9,7 +9,7 @@ import http, { PaginatedResult, QueryBuilderParams, withQueryBuilderParams } fro
 import useFilteredObject from '@/plugins/useFilteredObject';
 import { useUserSWRKey } from '@/plugins/useSWRKey';
 
-export type ActivityLogFilters = QueryBuilderParams<'ip' | 'event', 'timestamp'>;
+export type ActivityLogFilters = QueryBuilderParams<['ip', 'event', 'date'], 'timestamp'>;
 
 const useActivityLogs = (
     filters?: ActivityLogFilters,

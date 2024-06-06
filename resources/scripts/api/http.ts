@@ -118,16 +118,19 @@ export function getPaginationSet(data: any): PaginationDataSet {
     };
 }
 
-type QueryBuilderFilterValue = string | number | boolean | null;
+type QueryBuilderFilterValue = string | number | boolean | Date | null;
 
-export interface QueryBuilderParams<FilterKeys extends string = string, SortKeys extends string = string> {
-    page?: number;
-    filters?: {
-        [K in FilterKeys]?: QueryBuilderFilterValue | Readonly<QueryBuilderFilterValue[]>;
-    };
-    sorts?: {
-        [K in SortKeys]?: -1 | 0 | 1 | 'asc' | 'desc' | null;
-    };
+export interface QueryBuilderParams<
+  FilterKeys extends ReadonlyArray<string> = ReadonlyArray<string>, 
+  SortKeys extends string = string
+> {
+  page?: number;
+  filters?: {
+    [K in FilterKeys[number]]?: QueryBuilderFilterValue | Readonly<QueryBuilderFilterValue[]>;
+  };
+  sorts?: {
+    [K in SortKeys]?: -1 | 0 | 1 | 'asc' | 'desc' | null;
+  };
 }
 
 /**
@@ -136,29 +139,29 @@ export interface QueryBuilderParams<FilterKeys extends string = string, SortKeys
  * filters deterministically based on the provided values.
  */
 export const withQueryBuilderParams = (data?: QueryBuilderParams): Record<string, unknown> => {
-    if (!data) return {};
+  if (!data) return {};
 
-    const filters = Object.keys(data.filters || {}).reduce(
-        (obj, key) => {
-            const value = data.filters?.[key];
+  const filters = (data.filters ? Object.keys(data.filters) : []).reduce(
+    (obj, key) => {
+      const value = data.filters?.[key];
 
-            return !value || value === '' ? obj : { ...obj, [`filter[${key}]`]: value };
-        },
-        {} as NonNullable<QueryBuilderParams['filters']>,
-    );
+      return !value || value === '' ? obj : { ...obj, [`filter[${key}]`]: value };
+    },
+    {} as NonNullable<QueryBuilderParams['filters']>,
+  );
 
-    const sorts = Object.keys(data.sorts || {}).reduce((arr, key) => {
-        const value = data.sorts?.[key];
-        if (!value || !['asc', 'desc', 1, -1].includes(value)) {
-            return arr;
-        }
+  const sorts = (data.sorts ? Object.keys(data.sorts) : []).reduce((arr, key) => {
+    const value = data.sorts?.[key];
+    if (!value || !['asc', 'desc', 1, -1].includes(value)) {
+      return arr;
+    }
 
-        return [...arr, (value === -1 || value === 'desc' ? '-' : '') + key];
-    }, [] as string[]);
+    return [...arr, (value === -1 || value === 'desc' ? '-' : '') + key];
+  }, [] as string[]);
 
-    return {
-        ...filters,
-        sort: !sorts.length ? undefined : sorts.join(','),
-        page: data.page,
-    };
+  return {
+    ...filters,
+    sort: !sorts.length ? undefined : sorts.join(','),
+    page: data.page,
+  };
 };

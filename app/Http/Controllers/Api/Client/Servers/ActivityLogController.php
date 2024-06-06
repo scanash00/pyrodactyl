@@ -6,8 +6,10 @@ use Pterodactyl\Models\User;
 use Pterodactyl\Models\Server;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Models\ActivityLog;
+use Carbon\Carbon;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Pterodactyl\Http\Requests\Api\Client\ClientApiRequest;
@@ -26,7 +28,11 @@ class ActivityLogController extends ClientApiController
         $activity = QueryBuilder::for($server->activity())
             ->with('actor')
             ->allowedSorts(['timestamp'])
-            ->allowedFilters([AllowedFilter::partial('event')])
+            ->allowedFilters([
+                AllowedFilter::partial('event'),
+                AllowedFilter::partial('ip'),
+                AllowedFilter::custom('date', new DateFilter())
+            ])
             ->whereNotIn('activity_logs.event', ActivityLog::DISABLED_EVENTS)
             ->when(config('activity.hide_admin_activity'), function (Builder $builder) use ($server) {
                 // We could do this with a query and a lot of joins, but that gets pretty
@@ -50,5 +56,14 @@ class ActivityLogController extends ClientApiController
         return $this->fractal->collection($activity)
             ->transformWith($this->getTransformer(ActivityLogTransformer::class))
             ->toArray();
+    }
+}
+
+class DateFilter implements Filter
+{
+    public function __invoke(Builder $query, $value, string $property): Builder
+    {
+        $date = Carbon::parse($value)->toDateString();
+        return $query->whereDate('timestamp', $date);
     }
 }
