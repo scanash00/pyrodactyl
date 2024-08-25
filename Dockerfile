@@ -3,7 +3,8 @@
 FROM --platform=$TARGETOS/$TARGETARCH oven/bun:alpine
 WORKDIR /app
 COPY . ./
-RUN bun i --frozen-lockfile \
+RUN apk add --no-cache --update git \
+    && bun i --frozen-lockfile \
     && bun ship
 
 # Stage 1:
