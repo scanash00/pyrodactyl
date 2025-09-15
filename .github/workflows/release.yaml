@@ -17,7 +17,7 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-          
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -69,8 +69,13 @@ jobs:
           git push -u origin $BRANCH
           sed -i "s/'version' => '[0-9]\+\.[0-9]\+\.[0-9]\+',/'version' => '${{ steps.get_latest_tag.outputs.latest_tag }}:1',/" config/app.php
           git add config/app.php
-          git commit -m "ci(release): bump version"
-          git push
+          # Commit only if there are staged changes
+          if ! git diff --cached --quiet; then
+            git commit -m "ci(release): bump version"
+            git push
+          else
+            echo "No changes to commit."
+          fi
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
 
       - name: Create release archive
